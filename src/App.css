@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;500;600;700;800&display=swap');
+
+/* ══════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════ */
+:root {
+  --bg: #f7f5f0;
+  --bg2: #eeeae2;
+  --surface: #ffffff;
+  --surface2: #fdfcfa;
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.12);
+
+  --green: #2d7a4f;
+  --green-light: #3d9962;
+  --green-pale: #e8f5ee;
+  --green-glow: rgba(45,122,79,0.15);
+
+  --orange: #e8621a;
+  --orange-light: #f07a35;
+  --orange-pale: #fef0e8;
+
+  --yellow: #f5c842;
+  --yellow-pale: #fef9e7;
+
+  --red: #e83a3a;
+  --red-pale: #fee8e8;
+
+  --text: #1a1a1a;
+  --text2: #4a4a4a;
+  --muted: #888;
+  --muted2: #aaa;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.14);
+  --shadow-green: 0 8px 24px rgba(45,122,79,0.25);
+
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ══════════════════════════════════
+   RESET & BASE
+══════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+button { font-family: 'Nunito', sans-serif; cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+
+/* ══════════════════════════════════
+   APP LAYOUT
+══════════════════════════════════ */
+.app-root { min-height: 100vh; }
+
+.app-main { padding-top: 80px; }
+
+/* ══════════════════════════════════
+   SHARED SECTION STYLES
+══════════════════════════════════ */
+.section-wrap {
+  padding: 80px 0;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-pale);
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.section-title .orange { color: var(--orange); }
+
+.see-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  background: var(--surface);
+  border: 1.5px solid var(--border2);
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text2);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.see-all-btn:hover {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-green);
+}
+
+/* ══════════════════════════════════
+   SKELETON LOADER
+══════════════════════════════════ */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e8e4dc 25%, #f0ece4 50%, #e8e4dc 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+/* ══════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+.reveal-delay-6 { transition-delay: 0.48s; }
+
+/* ══════════════════════════════════
+   OVERLAY BACKDROP
+══════════════════════════════════ */
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 768px) {
+  .section-wrap { padding: 50px 16px; }
+  .section-header { flex-wrap: wrap; gap: 16px; }
+}
