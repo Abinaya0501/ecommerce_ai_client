@@ -7,6 +7,8 @@ import DealsSection from './pages/DealsSection';
 import AboutSection from './pages/AboutSection';
 import CartDrawer from './pages/CartDrawer';
 import Toast from './pages/Toast';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import './App.css';
 
 export default function App() {
@@ -16,9 +18,16 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState('landing');
+  const [user, setUser] = useState(null);
 
-  // Simulate initial load
+  // Check for existing login on mount
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    if (token && savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
     const t = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(t);
   }, []);
@@ -50,6 +59,31 @@ export default function App() {
   const cartCount = cartItems.reduce((s, i) => s + i.qty, 0);
   const cartTotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
 
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleLoginSuccess = (userData, token) => {
+    setUser(userData);
+    setCurrentPage('landing');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    setCurrentPage('landing');
+  };
+
+  // Render different pages based on currentPage state
+  if (currentPage === 'login') {
+    return <LoginPage onNavigate={handleNavigate} onLoginSuccess={handleLoginSuccess} />;
+  }
+
+  if (currentPage === 'signup') {
+    return <SignupPage onNavigate={handleNavigate} onLoginSuccess={handleLoginSuccess} />;
+  }
+
   return (
     <div className="app-root">
       <Navbar
@@ -57,9 +91,12 @@ export default function App() {
         onCartOpen={() => setCartOpen(true)}
         searchQuery={searchQuery}
         onSearch={setSearchQuery}
+        user={user}
+        onLoginClick={() => handleNavigate('login')}
+        onLogout={handleLogout}
       />
       <main className="app-main">
-        <HeroSection loading={loading} />
+        <HeroSection loading={loading} onNavigate={handleNavigate} />
         <CategorySection
           loading={loading}
           activeCategory={activeCategory}

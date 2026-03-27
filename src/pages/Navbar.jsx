@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 
-export default function Navbar({ cartCount, onCartOpen, searchQuery, onSearch }) {
+export default function Navbar({ cartCount, onCartOpen, searchQuery, onSearch, user, onLoginClick, onLogout }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
@@ -57,9 +57,18 @@ export default function Navbar({ cartCount, onCartOpen, searchQuery, onSearch })
         {/* Actions */}
         <div className="nb-actions">
           <button className="nb-icon-btn" title="Wishlist">♡</button>
-          <button className="nb-icon-btn nb-account" title="Account">
-            <span className="account-avatar">U</span>
-          </button>
+          {user ? (
+            <>
+              <button className="nb-icon-btn nb-account" title={user.fullName}>
+                <span className="account-avatar">{user.firstName?.[0] || 'U'}</span>
+              </button>
+              <button className="nb-icon-btn" onClick={onLogout} title="Logout">🚪</button>
+            </>
+          ) : (
+            <button className="nb-icon-btn nb-account" onClick={onLoginClick} title="Login">
+              <span className="account-avatar">👤</span>
+            </button>
+          )}
           <button className="nb-cart-btn" onClick={onCartOpen}>
             <span className="cart-icon">🛒</span>
             <span className="cart-label">Cart</span>
