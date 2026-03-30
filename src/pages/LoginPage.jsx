@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 
-const API_URL = '/api';
+const API_URL = 'https://ecommerce-ai-server1-pjhh.onrender.com/api';
 
 export default function LoginPage({ onNavigate, onLoginSuccess }) {
   const [email, setEmail] = useState('');

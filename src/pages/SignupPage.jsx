@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
 
-const API_URL = '/api';
+const API_URL = 'https://ecommerce-ai-server1-pjhh.onrender.com/api';
 
 export default function SignupPage({ onNavigate, onLoginSuccess }) {
   const [form, setForm] = useState({
